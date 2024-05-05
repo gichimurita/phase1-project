@@ -1,31 +1,34 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const quoteText = document.querySelector('.quote-text');
-    const newQuoteBtn = document.querySelector('.new-quote-btn');
+console.log("JavaScript file loaded");
 
-    newQuoteBtn.addEventListener('click', fetchNewQuote);
 
-    function fetchNewQuote() {
-        const url = 'data.json';
+const baseUrl = "https://quote-garden.onrender.com/api/v3/quotes";
 
-        fetch(url)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const quotes = data.data;
-                const randomIndex = Math.floor(Math.random() * quotes.length);
-                const randomQuote = quotes[randomIndex];
-                const quoteContent = `${randomQuote.quoteText} - ${randomQuote.quoteAuthor}`;
-                quoteText.textContent = quoteContent;
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+async function getQuote(category = null) {
+    try {
+        let url = baseUrl;
+        if (category) {
+            url += `?category=${category}`;
+        }
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        const randomIndex = Math.floor(Math.random() * data.data.length);
+        const randomQuote = data.data[randomIndex].quoteText;
+        document.querySelector('.quote-text').innerHTML = randomQuote;
+    } catch (error) {
+        console.error("Error fetching quote:", error);
     }
+}
 
-    // Initial fetch
-    fetchNewQuote();
+document.addEventListener('DOMContentLoaded', function() {
+    getQuote(); // Fetch a random quote when the page loads
+});
+
+document.querySelector('.new-quote-btn').addEventListener('click', function() {
+    getQuote(); // Fetch a new random quote when the "New Quote" button is clicked
+});
+
+document.querySelector('#quote-category').addEventListener('change', function() {
+    const selectedCategory = this.value;
+    getQuote(selectedCategory); // Fetch a new random quote based on the selected category
 });
