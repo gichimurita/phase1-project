@@ -21,16 +21,16 @@ async function getQuote(category = null) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    getQuote(); // Fetch a random quote when the page loads
+    getQuote(); 
 });
 
 document.querySelector('.new-quote-btn').addEventListener('click', function() {
-    getQuote(); // Fetch a new random quote when the "New Quote" button is clicked
+    getQuote(); 
 });
 
 document.querySelector('#quote-category').addEventListener('change', function() {
     const selectedCategory = this.value;
-    getQuote(selectedCategory); // Fetch a new random quote based on the selected category
+    getQuote(selectedCategory); 
 });
 
 // To copy the quote text to the clipboard
@@ -48,6 +48,6 @@ function markAsFavorite() {
     alert('Quote marked as favorite!');
 }
 
-document.querySelector('.copy-quote-btn').addEventListener('click', copyQuote); // Add event listener for copying the quote
+document.querySelector('.copy-quote-btn').addEventListener('click', copyQuote); 
 
-document.querySelector('.favorite-btn').addEventListener('click', markAsFavorite); // Add event listener for marking the quote as a favorite
+document.querySelector('.favorite-btn').addEventListener('click', markAsFavorite);
