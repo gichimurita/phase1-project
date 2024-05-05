@@ -32,3 +32,22 @@ document.querySelector('#quote-category').addEventListener('change', function() 
     const selectedCategory = this.value;
     getQuote(selectedCategory); // Fetch a new random quote based on the selected category
 });
+
+// To copy the quote text to the clipboard
+function copyQuote() {
+    const quoteText = document.querySelector('.quote-text').textContent;
+    navigator.clipboard.writeText(quoteText).then(() => {
+        alert('Quote copied to clipboard!');
+    }).catch((err) => {
+        console.error('Failed to copy quote: ', err);
+    });
+}
+
+// To mark the quote as a favorite
+function markAsFavorite() {
+    alert('Quote marked as favorite!');
+}
+
+document.querySelector('.copy-quote-btn').addEventListener('click', copyQuote); // Add event listener for copying the quote
+
+document.querySelector('.favorite-btn').addEventListener('click', markAsFavorite); // Add event listener for marking the quote as a favorite
